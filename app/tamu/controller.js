@@ -1,9 +1,12 @@
 const Tamu = require('./model');
 const index = async (req, res, next) => {
     try {
-        let semuaTamu = await Tamu.find();
+        let namaTamu = req.query.namaTamu
+        if(!namaTamu) namaTamu = ""
+        let semuaTamu = await Tamu.find({namaTamu: {$regex: namaTamu, $options: 'i'}}).sort({createdAt: -1})
         return res.status(200).json({
-            message: semuaTamu
+            message : semuaTamu,
+            totalData : semuaTamu.length
         })
     } catch (e) {
         next(e)
