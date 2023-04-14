@@ -1,7 +1,7 @@
 const Tamu = require('./model');
 const index = async (req, res, next) => {
     try {
-        let {limit=10, skip=0} = req.query;
+        let {limit=0, skip=0} = req.query;
         let namaTamu = req.query.namaTamu
         if(!namaTamu) namaTamu = ""
         let semuaTamu = await Tamu.find({namaTamu: {$regex: namaTamu, $options: 'i'}}).sort({createdAt: -1}).limit(parseInt(limit)).skip(parseInt(skip))
